@@ -1,0 +1,12 @@
+build: module
+name: sx
+about: Portable base library for C/C++ programs and games
+author: Christophe TES
+depends: []
+inputs:
+  # sources
+  - sx.c
+  - !?macos sx.m
+
+  # libs
+  - !?linux <libpthread.a> # +raspbian
