@@ -1,0 +1,43 @@
+---
+build: module
+about: raylib is a simple and easy-to-use library to enjoy videogames programming.
+name: raylib
+author: Ramon Santamaria (raylib), Christophe TES
+support: https://github.com/seyhajin/flux
+options:
+  cc: !opts
+    - !?macos -DPLATFORM_DESKTOP -DUSE_AUDIO -ObjC
+    - !?windows -DPLATFORM_DESKTOP -DUSE_AUDIO -D_CRT_SECURE_NO_WARNINGS
+inputs:
+  # include dirs
+  - raylib/src/*.h
+  - raylib/src/external/glfw/include/*.h
+  - raylib/src/external/glfw/src/*.h
+
+  # sources
+  - raylib/src/core.c
+  - raylib/src/models.c
+  - raylib/src/shapes.c
+  - raylib/src/text.c
+  - raylib/src/textures.c
+  - raylib/src/utils.c
+  - raylib/src/raudio.c # USE_AUDIO
+  - raylib/src/rglfw.c
+
+
+  # libs/frameworks
+  # macos
+  - !?macos <CoreFoundation.framework>
+  - !?macos <CoreVideo.framework>
+  - !?macos <IOKit.framework>
+  - !?macos <Cocoa.framework>
+  - !?macos <GLUT.framework>
+  - !?macos <OpenGL.framework>
+  - !?macos <GLKit.framework>
+  #windows
+  - !?mingw <libmingw32.a> # mingw-w64
+  - !?windows <libuser32.a>
+  - !?windows <libshell32.a>
+  - !?windows <libopengl32.a>
+  - !?windows <libgdi32.a>
+  - !?windows <libwinmm.a>
