@@ -1,0 +1,211 @@
+---
+build: module
+about: Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL, Direct3D and Metal.
+name: sdl2
+author: Sam Lantinga (SDL), Christophe TES
+support: https://github.com/seyhajin/flux
+#options:
+#  cc: !concat ["`pkg-config --cflags hidapi`"] # use pkg-config
+#  cxx: !concat
+#    - -fobjc-weak
+#  ld: !concat ["`pkg-config --lib hidapi`"]
+options:
+  cc: !opts
+    - !?macos -DSDL_VIDEO_RENDER_OGL_ES2=0 -DSDL_VIDEO_OPENGL_ES2=0 -x objective-c -fobjc-weak
+    - !?windows -DSDL_VIDEO_RENDER_OGL_ES2=0 -DSDL_VIDEO_OPENGL_ES2=0 -DHAVE_LIBC=1
+#    - !?gcc -I"SDL/include"
+  cxx: !opts
+    - !?macos -DSDL_VIDEO_RENDER_OGL_ES2=0 -DSDL_VIDEO_OPENGL_ES2=0 -x objective-c -fobjc-weak
+    - !?windows -DSDL_VIDEO_RENDER_OGL_ES2=0 -DSDL_VIDEO_OPENGL_ES2=0 -DHAVE_LIBC=1
+#  ld: !concat
+#    - !?macos -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController # enable_joystick_mfi = xyes (see 'configure' line 23490)
+inputs:
+  #-----------------------------------------------------
+  # assets dirs/files (src@/dst)
+  #-----------------------------------------------------
+  #- assets/@/assets/
+
+  #-----------------------------------------------------
+  # include dirs
+  #-----------------------------------------------------
+  - SDL/include/*.h
+  - SDL/src/hidapi/hidapi/*.h # enable hidapi
+  - SDL/src/video/khronos/*.h # enable EGL, GLES2, VULKAN
+
+  #-----------------------------------------------------
+  # lib dirs
+  #-----------------------------------------------------
+  #- lib/*.a # or lib/*.lib
+
+  #-----------------------------------------------------
+  # sources
+  #-----------------------------------------------------
+  #- SDL/src/**/*.c # recursive, used with caution
+  # src
+  - SDL/src/*.c
+  
+  # atomic
+  - SDL/src/atomic/*.c
+
+  # audio
+  - SDL/src/audio/*.c
+  - SDL/src/audio/disk/SDL_diskaudio.c
+  - SDL/src/audio/dummy/SDL_dummyaudio.c
+  - !?macos   SDL/src/audio/coreaudio/SDL_coreaudio.m
+  - !?windows SDL/src/audio/directsound/*.c
+  - !?windows SDL/src/audio/wasapi/*.c
+  - !?windows SDL/src/audio/winmm/*.c
+
+  # core
+  - !?windows SDL/src/core/windows/*.c
+
+  # cpuinfo
+  - SDL/src/cpuinfo/SDL_cpuinfo.c
+
+  # dynapi
+  - SDL/src/dynapi/SDL_dynapi.c
+
+  # events
+  - SDL/src/events/*.c
+
+  # file
+  - SDL/src/file/SDL_rwops.c
+  - !?macos SDL/src/file/cocoa/SDL_rwopsbundlesupport.m
+
+  # filesystem
+  - !?macos   SDL/src/filesystem/cocoa/SDL_sysfilesystem.m
+  - !?windows SDL/src/filesystem/windows/SDL_sysfilesystem.c
+
+  # haptic
+  - SDL/src/haptic/SDL_haptic.c
+  - !?macos SDL/src/haptic/darwin/SDL_syshaptic.c
+
+  # hdiapi
+  - SDL/src/hidapi/SDL_hidapi.c
+  - !?macos   SDL/src/hidapi/mac/hid.c
+  - !?windows SDL/src/haptic/windows/*.c
+
+  # joystick
+  - SDL/src/joystick/*.c
+  - SDL/src/joystick/hidapi/*.c
+  - SDL/src/joystick/virtual/SDL_virtualjoystick.c
+  - !?macos   SDL/src/joystick/darwin/SDL_iokitjoystick.c
+  - !?macos   SDL/src/joystick/iphoneos/SDL_mfijoystick.m
+  - !?windows SDL/src/joystick/windows/*.c
+
+  # libm
+  - !?windows SDL/src/libm/*.c
+  
+  # loadso
+  - !?macos   SDL/src/loadso/dlopen/SDL_sysloadso.c
+  - !?windows SDL/src/loadso/windows/SDL_sysloadso.c
+
+  # locale
+  - SDL/src/locale/SDL_locale.c
+  - !?macos   SDL/src/locale/macosx/SDL_syslocale.m
+  - !?windows SDL/src/locale/windows/SDL_syslocale.c
+
+  #main
+  #- !?ios SDL/src/main/uikit/SDL_uikit_main.c # for iOS
+  #- !?windows SDL/src/main/windows/SDL_windows_main.c
+
+  # misc
+  - SDL/src/misc/SDL_url.c
+  - !?macos   SDL/src/misc/macosx/SDL_sysurl.m
+  - !?windows SDL/src/misc/windows/SDL_sysurl.c
+
+  # power
+  - SDL/src/power/SDL_power.c
+  - !?macos   SDL/src/power/macosx/SDL_syspower.c
+  - !?windows SDL/src/power/windows/SDL_syspower.c
+
+  # render
+  - SDL/src/render/*.c
+  - SDL/src/render/software/*.c
+  - SDL/src/render/opengl/*.c
+  #- SDL/src/render/opengles/*.c
+  #- SDL/src/render/opengles2/*.c
+  - !?macos   SDL/src/render/metal/*.m
+  - !?windows SDL/src/render/direct3d/*.c
+  - !?windows SDL/src/render/direct3d11/*.c
+
+  # sensor
+  - SDL/src/sensor/SDL_sensor.c
+  - SDL/src/sensor/dummy/SDL_dummysensor.c
+  #- !?ios SDL/src/sensor/coremotion/SDL_coremotionsensor.m # iOS
+  - !?windows SDL/src/sensor/windows/SDL_windowssensor.c
+
+  # stdlib
+  - SDL/src/stdlib/*.c
+
+  # thread
+  - SDL/src/thread/*.c
+  #- SDL/src/thread/SDL_thread.c
+  - !?macos SDL/src/thread/pthread/*.c
+  - !?linux SDL/src/thread/pthread/*.c
+  - !?windows SDL/src/thread/generic/SDL_syscond.c
+  - !?windows SDL/src/thread/windows/*.c
+
+  # timer
+  - SDL/src/timer/SDL_timer.c
+  - !?macos   SDL/src/timer/unix/SDL_systimer.c
+  - !?linux   SDL/src/timer/unix/SDL_systimer.c
+  - !?windows SDL/src/timer/windows/SDL_systimer.c
+
+  # video
+  - SDL/src/video/*.c
+  - SDL/src/video/yuv2rgb/*.c
+  - SDL/src/video/dummy/*.c
+  - !?macos   SDL/src/video/cocoa/*.m
+  - !?windows SDL/src/video/windows/*.c
+  #- !?windows SDL/src/video/winrt/*.cpp # uncomment if enabled 'SDL/src/render/direct3d11/SDL_render_winrt.cpp'
+
+  #-----------------------------------------------------
+  # libs/frameworks
+  #-----------------------------------------------------
+  # macos
+  - !?macos <libm.a>
+  - !?macos <libiconv.a>
+  - !?macos <libobjc.a>
+  - !?macos <MetalKit.framework>
+  - !?macos <CoreVideo.framework>
+  - !?macos <CoreAudio.framework> # SDL_AUDIO_DRIVER_COREAUDIO
+  - !?macos <AudioToolbox.framework> # SDL_AUDIO_DRIVER_COREAUDIO
+  - !?macos <AVFoundation.framework> # SDL_VIDEO_*
+  - !?macos <CoreBluetooth.framework>
+  - !?macos <CoreMotion.framework>
+  - !?macos <GameController.framework>
+  - !?macos <IOKit.framework>
+  - !?macos <ForceFeedback.framework> # SDL_HAPTIC_IOKIT
+  - !?macos <CoreHaptics.framework>
+  - !?macos <CoreGraphics.framework>
+  - !?macos <QuartzCore.framework>
+  #- !?macos <UIKit.framework> #iOS
+  - !?macos <Metal.framework>
+  - !?macos <Foundation.framework>
+  - !?macos <CoreFoundation.framework>
+  - !?macos <Carbon.framework>
+  - !?macos <AudioUnit.framework>
+  - !?macos <Cocoa.framework>
+  - !?macos <OpenGL.framework>
+  - !?macos <GLKit.framework>
+  #windows
+  - !?mingw <libmingw32.a> # mingw-w64
+  - !?windows <libdinput8.a> # SDL_JOYSTICK_DINPUT
+  - !?windows <libdxguid.a> # SDL_JOYSTICK_DINPUT
+  #- !?windows <libdxerr8.a> # SDL_JOYSTICK_DINPUT
+  - !?windows <libuser32.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libgdi32.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libwinmm.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libimm32.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libole32.a> # SDL_LOADSO_WINDOWS
+  - !?windows <liboleaut32.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libshell32.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libsetupapi.a> # SDL_LOADSO_WINDOWS
+  - !?windows <libversion.a> # SDL_LOADSO_WINDOWS
+
+  #- !?windows <libdsound.a>
+  #- !?windows <libxinput.a>
+  #- !?msvc <libhid.a> # msvc
+  - !?windows <libadvapi32.a>
+  #- !?windows <libkernel32.a>
