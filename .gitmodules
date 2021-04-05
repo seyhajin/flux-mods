@@ -1,0 +1,6 @@
+[submodule "sdl2/SDL"]
+	path = sdl2/SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "raylib/raylib"]
+	path = raylib/raylib
+	url = https://github.com/raysan5/raylib
