@@ -4,3 +4,6 @@
 [submodule "raylib/raylib"]
 	path = raylib/raylib
 	url = https://github.com/raysan5/raylib
+[submodule "yaml/libyaml"]
+	path = yaml/libyaml
+	url = https://github.com/yaml/libyaml.git
