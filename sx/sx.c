@@ -5,7 +5,7 @@
 
 int sx_argc;
 char **sx_argv;
-int sx_main();
+int sx_main(int argc, char *argv[]);
 
 #if SX_PLATFORM_ANDROID
     //TODO: sx_print, sx_printf
@@ -34,6 +34,6 @@ int main(int argc, char *argv[]) {
 
     sx_argc = argc;
     sx_argv = argv;
-    return sx_main();
+    return sx_main(argc, argv);
 }
 
