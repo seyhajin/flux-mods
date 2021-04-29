@@ -41,7 +41,6 @@ inputs:
   - !?macos <CoreVideo.framework>
   - !?macos <IOKit.framework>
   - !?macos <Cocoa.framework>
-  - !?macos <GLUT.framework>
   - !?macos <OpenGL.framework>
   - !?macos <GLKit.framework>
   #windows
