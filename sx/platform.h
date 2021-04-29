@@ -139,7 +139,7 @@
    #define SX_CACHE_LINE_SIZE 64
 #else // PNaCl doesn't have CPU defined
     #undef  SX_CPU_JIT
-    #define SX_CPU_JIT
+    #define SX_CPU_JIT 1
     #define SX_CACHE_LINE_SIZE 64
 #endif // CPU
 
@@ -333,7 +333,7 @@
 
 /// Web platforms
 #define SX_PLATFORM_WEB      (0 \
-	||  SX_PLATFORM_EMSCRIPTEN     \
+	||  SX_PLATFORM_EMSCRIPTEN  \
 	)
 
 /// Compiler name
@@ -343,7 +343,7 @@
 		SX_STRINGIZE(__GNUC_MINOR__) "." \
 		SX_STRINGIZE(__GNUC_PATCHLEVEL__)
 #elif SX_COMPILER_CLANG
-    #define SX_COMPILER_NAME "Clang "      \
+    #define SX_COMPILER_NAME "Clang "     \
 		SX_STRINGIZE(__clang_major__) "." \
 		SX_STRINGIZE(__clang_minor__) "." \
 		SX_STRINGIZE(__clang_patchlevel__)
@@ -374,7 +374,7 @@
 #elif SX_PLATFORM_BSD
     #define SX_PLATFORM_NAME "BSD"
 #elif SX_PLATFORM_EMSCRIPTEN
-    #define SX_PLATFORM_NAME "asm.js "          \
+    #define SX_PLATFORM_NAME "asm.js "         \
 		SX_STRINGIZE(__EMSCRIPTEN_major__) "." \
 		SX_STRINGIZE(__EMSCRIPTEN_minor__) "." \
 		SX_STRINGIZE(__EMSCRIPTEN_tiny__)
