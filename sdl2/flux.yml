@@ -21,6 +21,11 @@ options:
 #    - !?macos -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController # enable_joystick_mfi = xyes (see 'configure' line 23490)
 inputs:
   #-----------------------------------------------------
+  # module sources
+  #-----------------------------------------------------
+  - sdl2.c
+
+  #-----------------------------------------------------
   # assets dirs/files (src@/dst)
   #-----------------------------------------------------
   #- assets/@/assets/
